@@ -9,6 +9,14 @@ import java.util.List;
 @Service
 public class ProductoService {
 
+    /**
+     * Porcentaje de ganancia que se asigna automáticamente cuando el
+     * cliente no envía el campo, o lo envía en null. Vive en el backend
+     * a propósito, para que ningún cliente (frontend, Postman, etc.)
+     * pueda alterarlo enviando un valor distinto por accidente u omisión.
+     */
+    private static final double PORCENTAJE_GANANCIA_POR_DEFECTO = 25.0;
+
     private final ProductoRepository productoRepository;
 
     public ProductoService(ProductoRepository productoRepository) {
@@ -16,6 +24,11 @@ public class ProductoService {
     }
 
     public Producto guardarProducto(Producto producto) {
+
+        if (producto.getPorcentajeGanancia() == null) {
+            producto.setPorcentajeGanancia(PORCENTAJE_GANANCIA_POR_DEFECTO);
+        }
+
         return productoRepository.save(producto);
     }
 
@@ -33,7 +46,12 @@ public class ProductoService {
         Producto producto = obtenerProductoPorId(id);
 
         producto.setNombre(productoActualizado.getNombre());
-        producto.setPorcentajeGanancia(productoActualizado.getPorcentajeGanancia());
+
+        producto.setPorcentajeGanancia(
+                productoActualizado.getPorcentajeGanancia() != null
+                        ? productoActualizado.getPorcentajeGanancia()
+                        : PORCENTAJE_GANANCIA_POR_DEFECTO
+        );
 
         return productoRepository.save(producto);
     }
