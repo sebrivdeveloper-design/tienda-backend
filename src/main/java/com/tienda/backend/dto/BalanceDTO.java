@@ -11,8 +11,6 @@ public class BalanceDTO {
 
     private Double ingresos;
 
-    private Double compras;
-
     private Double gastos;
 
     private Double balance;

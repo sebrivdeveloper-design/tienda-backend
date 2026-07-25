@@ -1,9 +1,9 @@
 package com.tienda.backend.service;
 
-import com.tienda.backend.dto.CompraRequestDTO;
-import com.tienda.backend.entity.Compra;
+import com.tienda.backend.dto.CostoProductoRequestDTO;
+import com.tienda.backend.entity.CostoProducto;
 import com.tienda.backend.entity.Producto;
-import com.tienda.backend.repository.CompraRepository;
+import com.tienda.backend.repository.CostoProductoRepository;
 import com.tienda.backend.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +11,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class CompraService {
+public class CostoProductoService {
 
-    private final CompraRepository compraRepository;
+    private final CostoProductoRepository costoProductoRepository;
     private final ProductoRepository productoRepository;
 
-    public CompraService(
-            CompraRepository compraRepository,
+    public CostoProductoService(
+            CostoProductoRepository costoProductoRepository,
             ProductoRepository productoRepository
     ) {
-        this.compraRepository = compraRepository;
+        this.costoProductoRepository = costoProductoRepository;
         this.productoRepository = productoRepository;
     }
 
-    public Compra registrarCompra(CompraRequestDTO dto) {
+    public CostoProducto registrarCostoProducto(CostoProductoRequestDTO dto) {
 
         Producto producto = productoRepository.findById(dto.getProductoId())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
@@ -35,7 +35,7 @@ public class CompraService {
                 costoUnitario +
                 (costoUnitario * producto.getPorcentajeGanancia()) / 100);
 
-        Compra compra = Compra.builder()
+        CostoProducto costoProducto = CostoProducto.builder()
                 .producto(producto)
                 .cantidad(dto.getCantidad())
                 .totalPagado(dto.getTotalPagado())
@@ -44,10 +44,10 @@ public class CompraService {
                 .fecha(LocalDate.now())
                 .build();
 
-        return compraRepository.save(compra);
+        return costoProductoRepository.save(costoProducto);
     }
 
-    public List<Compra> listarCompras() {
-        return compraRepository.findAll();
+    public List<CostoProducto> listarCostosProductos() {
+        return costoProductoRepository.findAll();
     }
 }

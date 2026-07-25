@@ -5,6 +5,12 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+/**
+ * Registra el costo de adquisicion de productos (antes "Compra").
+ * Se mantiene @Table(name = "compras") para seguir usando exactamente
+ * la misma tabla ya existente en Neon -- no se crea tabla nueva ni se
+ * migran registros.
+ */
 @Entity
 @Table(name = "compras")
 @Getter
@@ -12,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Compra {
+public class CostoProducto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
