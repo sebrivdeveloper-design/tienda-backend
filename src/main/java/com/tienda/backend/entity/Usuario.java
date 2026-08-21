@@ -2,6 +2,7 @@ package com.tienda.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.tienda.backend.config.RelojConfig;
 
 import java.time.LocalDateTime;
 
@@ -41,7 +42,7 @@ public class Usuario {
     public void prePersist() {
 
         if (fechaCreacion == null) {
-            fechaCreacion = LocalDateTime.now();
+            fechaCreacion = LocalDateTime.now(RelojConfig.ZONA_COLOMBIA);
         }
 
         if (activo == null) {

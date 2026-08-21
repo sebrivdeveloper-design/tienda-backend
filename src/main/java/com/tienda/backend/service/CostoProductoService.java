@@ -6,6 +6,7 @@ import com.tienda.backend.entity.Producto;
 import com.tienda.backend.repository.CostoProductoRepository;
 import com.tienda.backend.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
+import java.time.Clock;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,13 +16,16 @@ public class CostoProductoService {
 
     private final CostoProductoRepository costoProductoRepository;
     private final ProductoRepository productoRepository;
+    private final Clock clock;
 
     public CostoProductoService(
             CostoProductoRepository costoProductoRepository,
-            ProductoRepository productoRepository
+            ProductoRepository productoRepository,
+            Clock clock
     ) {
         this.costoProductoRepository = costoProductoRepository;
         this.productoRepository = productoRepository;
+        this.clock = clock;
     }
 
     public CostoProducto registrarCostoProducto(CostoProductoRequestDTO dto) {
@@ -41,7 +45,7 @@ public class CostoProductoService {
                 .totalPagado(dto.getTotalPagado())
                 .costoUnitario(costoUnitario)
                 .precioSugerido(precioSugerido)
-                .fecha(LocalDate.now())
+                .fecha(LocalDate.now(clock))
                 .build();
 
         return costoProductoRepository.save(costoProducto);
