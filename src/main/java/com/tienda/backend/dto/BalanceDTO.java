@@ -9,9 +9,13 @@ import lombok.Setter;
 @Builder
 public class BalanceDTO {
 
+    
     private Double ingresos;
 
     private Double gastos;
 
-    private Double balance;
+    
+    private Double variacionDia;
+
+    private Double saldo;
 }

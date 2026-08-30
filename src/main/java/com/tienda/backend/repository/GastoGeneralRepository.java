@@ -8,4 +8,6 @@ import java.util.List;
 public interface GastoGeneralRepository
         extends JpaRepository<GastoGeneral, Long> {
                 List<GastoGeneral> findByFecha(LocalDate fecha);
+
+                List<GastoGeneral> findByFechaBetween(LocalDate desde, LocalDate hasta);
 }
